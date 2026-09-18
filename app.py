@@ -3,22 +3,59 @@ from tkinter import filedialog
 
 selected_directory = ""
 
-def select_directory():
-    global selected_directory
+#def select_directory():
+#    global selected_directory
 
-    selected_directory = filedialog.askdirectory()
+#    selected_directory = filedialog.askdirectory()
 
-    if selected_directory:
-        directory_label.config(text=selected_directory)
+#    if selected_directory:
+#        directory_label.config(text=selected_directory)
+
+def select_file():
+    global selected_file
+
+    selected_file = filedialog.askopenfilename()
+
+    if selected_file:
+        file_label.config(text=selected_file)
+
 
 def search():
-    search_text = search_entry.get()
+    search_text = search_entry.get().strip()
 
-    print(f"You searched for: {search_text}")
+#    if not selected_directory:
+#        print("Please select a directory first.")
+#        return
+
+    if not selected_file:
+        print("Please select a file first.")
+        return
+
+    if not search_text:
+        print("Please enter a word or sentence.")
+        return
+
+    try:
+        with open(
+            selected_file, 
+            "r", 
+            encoding="utf-8", 
+            errors="ignore"
+        ) as file:
+            content = file.read()
+
+        count = content.lower().count(
+            search_text.lower()
+        )
+
+        print(f"Count: {count}")
+
+    except Exception as error:
+        print(f"Could not read file: {error}")
 
 # main
 def main():
-    global directory_label
+    global file_label
     global search_entry
 
     root = tk.Tk()
@@ -36,19 +73,19 @@ def main():
 
     select_button = tk.Button(
         root,
-        text="Select Directory",
-        command=select_directory,    
+        text="Select File",
+        command=select_file,    
     )
 
     select_button.pack(pady=10)
 
-    directory_label = tk.Label(
+    file_label = tk.Label(
         root,
-        text="No directory selected",
+        text="No file selected",
         wraplength=600,
     )
 
-    directory_label.pack(pady=10)
+    file_label.pack(pady=10)
 
     search_label = tk.Label(
         root,
