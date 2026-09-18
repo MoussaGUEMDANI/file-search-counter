@@ -11,6 +11,11 @@ def select_directory():
     if selected_directory:
         directory_label.config(text=selected_directory)
 
+def search():
+    search_text = search_entry.get()
+
+    print(f"You searched for: {search_text}")
+
 # main
 def main():
     global directory_label
@@ -19,7 +24,7 @@ def main():
     root = tk.Tk()
 
     root.title("File Search Counter")
-    root.geometry("700x450")
+    root.geometry("700x500")
 
     title = tk.Label(
         root,
@@ -58,6 +63,14 @@ def main():
     )
 
     search_entry.pack(pady=5)
+
+    search_button = tk.Button(
+        root,
+        text="Search",
+        command=search,
+    )
+
+    search_button.pack(pady=15)
 
     root.mainloop()
 
