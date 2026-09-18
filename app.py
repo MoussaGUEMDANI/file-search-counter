@@ -1,15 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 
-selected_directory = ""
-
-#def select_directory():
-#    global selected_directory
-
-#    selected_directory = filedialog.askdirectory()
-
-#    if selected_directory:
-#        directory_label.config(text=selected_directory)
+selected_file = ""
 
 def select_file():
     global selected_file
@@ -23,16 +15,16 @@ def select_file():
 def search():
     search_text = search_entry.get().strip()
 
-#    if not selected_directory:
-#        print("Please select a directory first.")
-#        return
-
     if not selected_file:
-        print("Please select a file first.")
+        result_label.config(
+            text="Please select a file first."
+            )
         return
 
     if not search_text:
-        print("Please enter a word or sentence.")
+        result_label.config(
+            text=f'Search: "{search_text}"   Count: {count}'
+            )
         return
 
     try:
@@ -48,13 +40,18 @@ def search():
             search_text.lower()
         )
 
-        print(f"Count: {count}")
+        result_label.config(
+            text=f"Count: {count}"
+            )
 
     except Exception as error:
-        print(f"Could not read file: {error}")
+        result_label.config(
+            text=f"Could not read file: {error}"
+            )
 
 # main
 def main():
+    global result_label
     global file_label
     global search_entry
 
@@ -108,6 +105,13 @@ def main():
     )
 
     search_button.pack(pady=15)
+
+    result_label = tk.Label(
+        root,
+        text="Result:",
+    )
+
+    result_label.pack(pady=10)
 
     root.mainloop()
 
