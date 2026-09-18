@@ -14,11 +14,12 @@ def select_directory():
 # main
 def main():
     global directory_label
+    global search_entry
 
     root = tk.Tk()
 
     root.title("File Search Counter")
-    root.geometry("700x400")
+    root.geometry("700x450")
 
     title = tk.Label(
         root,
@@ -43,6 +44,20 @@ def main():
     )
 
     directory_label.pack(pady=10)
+
+    search_label = tk.Label(
+        root,
+        text="Enter a word or sentence:",
+    )
+
+    search_label.pack(pady=(20, 5))
+
+    search_entry = tk.Entry(
+        root,
+        width=60,
+    )
+
+    search_entry.pack(pady=5)
 
     root.mainloop()
 
